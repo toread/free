@@ -407,18 +407,6 @@
             <id>jbossy</id>
             <url>https://repository.jboss.org/nexus/content/groups/public/</url>
         </repository>
-        <repository>
-            <id>people.apache.snapshots</id>
-            <url>
-                http://repository.apache.org/content/groups/snapshots-group/
-            </url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
     </repositories>
     <!-- 插件集-->
     <pluginRepositories>
