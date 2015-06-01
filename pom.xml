@@ -378,8 +378,8 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <url>http://198.35.44.90:8080/manager/text</url>
-                    <username>198.35.44.90</username>
+                    <url>http://127.0.0.1:8080/manager/text</url>
+                    <username>tomcat</username>
                     <password>toread</password>
                     <path>/${project.artifactId}</path>
                 </configuration>
