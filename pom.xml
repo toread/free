@@ -307,6 +307,7 @@
                 <configuration>
                     <!-- http://maven.apache.org/plugins/maven-war-plugin/ -->
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <warSourceDirectory>${basedir}/webapp</warSourceDirectory>
                 </configuration>
             </plugin>
             <plugin>
