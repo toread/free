@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- 基础信息 -->
+    <link rel="stylesheet" type="text/css" href="${ROOT_PATH}/resource/css/base.css">
+    <link rel="stylesheet" type="text/css" href="${ROOT_PATH}/resource/css/from.css">
+    <link rel="stylesheet" type="text/css" href="${ROOT_PATH}/resource/css/function.css">
+    <link rel="stylesheet" type="text/css" href="${ROOT_PATH}/resource/css/animation.css">
+    <link rel="stylesheet" type="text/css" href="${ROOT_PATH}/resource/css/button.css">
+    <link rel="stylesheet" type="text/css" href="${ROOT_PATH}/resource/css/table.css">
+    <link rel="stylesheet" type="text/css" href="${ROOT_PATH}/resource/js/easyui/themes/gray/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${ROOT_PATH}/resource/js/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="${ROOT_PATH}/resource/js/easyui/themes/icon.css">
+    <script type="text/javascript" src="${ROOT_PATH}/resource/js/jquery/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="${ROOT_PATH}/resource/js/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${ROOT_PATH}/resource/js/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <!-- 覆盖默认设置 -->
+    <script type="text/javascript" src="${ROOT_PATH}/resource/js/easyui-ext/defaultOver.js"></script>
+    <!-- 其他扩展 -->
+    <script type="text/javascript" src="${ROOT_PATH}/resource/js/easyui-ext/global.js"></script>
+    <script type="text/javascript" src="${ROOT_PATH}/resource/js/easyui-ext/utils.js"></script>
+    <script type="text/javascript" src="${ROOT_PATH}/resource/js/easyui-ext/model.js"></script>
+
+    <script>
+        $(function(){
+            //初始化根路径
+            $.data(GLB,GLB.ROOT,"${ROOT_PATH}")
+
+            var tabs = $("#main_tabs").tabs({
+                fit:true,
+                closable:true
+            })
+            //导航处理
+            $("#core_fun_panel").tree({
+                url:$.toread.url.targetUrl("/resource/tree"),
+                method:'get',
+                onClick: function(node){
+                    if(!node.children){
+                        var panelExists = tabs.tabs('exists',node.text);
+                        if(!panelExists){
+                            tabs.tabs('add',{
+                                title:node.text,
+                                selected:true,
+                                href:$.toread.url.targetUrl("/user/grid")
+                            })
+                        }else{
+                            tabs.tabs('select',node.text);
+                        }
+                    }
+                }
+            })
+
+
+        })
+    </script>
+</head>
+<body id="main_layout" class="easyui-layout">
+    <div data-options="region:'north'" style="height:80px"></div>
+    <div  id="core_fun_panel" data-options="region:'west',split:true" title="功能菜单" style="width:180px;">
+
+    </div>
+    <div data-options="region:'center'">
+        <div id="main_tabs"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<script>
+    (function($){
+        //定义模块信息
+        //定义API
+        var userModel = Model.getModel('user');
+        $(function(){
+            //初始化数据
+            userModel.grid().datagrid({
+                url: $.toread.url.targetUrl("/user"),
+                columns:[[
+                    {field:'name',sortable:true,title:'名称',width:'20%'},
+                    {field:'sex',sortable:true,title:'性别',width:'10%'},
+                    {field:'age',sortable:true,title:'年龄',width:'10%'},
+                    {field:'address',sortable:true,title:'住址',width:'60%'}
+                ]],
+                toolbar: [{
+                    text:'添加人员',
+                    iconCls: 'icon-edit',
+                    handler: function(){
+                        var window =  userModel.window();
+                        window.window('open');
+                        window.window('refresh', $.toread.url.targetUrl("/user/form"));
+                        window.window('setTitle',"添加人员");
+                        $.data(document.getElementById('user-module'),'op','add');
+                    }
+                },'-',{
+                    text:'修改人员',
+                    iconCls: 'icon-help',
+                    handler: function(){
+                        var window =  userModel.window();
+                        var data = userModel.grid().datagrid('getSelected');
+                        if(data){
+                            if(data&&data.uuid){
+                                window.window('open');
+                                window.window('refresh',$.toread.url.targetUrl("/user/form"));
+                                window.window('setTitle','修改人员');
+                                $.data(document.getElementById('user-module'),'op','update');
+                            }
+                        }else{
+                            $.messager.alert('提示信息','请选择一条记录');
+                        }
+                    }
+                },'-',{
+                    text:'删除人员',
+                    iconCls: 'icon-help',
+                    handler: function(){
+                        var data = userModel.grid().datagrid('getSelected');
+                        if(data){
+                            if(data&&data.uuid){
+                                $.messager.confirm('提示信息','您是否要删除该记录',function(r){
+                                    if(r){userModel.api().delete(data);}
+                                })
+                            }
+                        }else{
+                            $.messager.alert('提示信息','请选择一条记录');
+                        }
+                    }
+                }]
+            });
+
+            //操作界面
+            userModel.window().window({
+                modal:true,
+                closed:true,
+                collapsible:false,
+                minimizable:false,
+                maximizable:false
+
+            });
+
+            $("#user_query_button").click(function(e){
+                e.preventDefault();
+                var qq  = $.utils.serializeFrom($("#ff"));
+                userModel.grid().datagrid('reload',qq);
+            });
+
+            //处理全局变量
+            var api = userModel.api();
+            $.data(document.getElementById('user-module'),'module',api);
+        })
+    })($);
+</script>
+
+<div id="user-module" class="easyui-layout"  style="width: 100%;height: 100%" data-optins="fit:true">
+    <div data-options="region:'north',collapsible:true,border:false" >
+        <form id="ff" class="query-form">
+            <div class="query-form-item fn-left fn-clear">
+                <label class="fn-left">名称:</label>
+                <input class="easyui-textbox" type="text" name="like$name"/>
+            </div>
+            <div class="query-form-item fn-left fn-clear">
+                <label class="fn-left">性别:</label>
+                <select style="width: 80px" class="easyui-combobox" name="equal$sex">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </div>
+            <div class="query-form-item fn-left fn-clear">
+                <label class="fn-left">名称:</label>
+                <input class="easyui-textbox" type="text" name="like$name"/>
+            </div>
+            <div class="query-form-item fn-left fn-clear">
+                <label class="fn-left">年龄大于:</label>
+                <input class="easyui-textbox" type="text" name="greaterThanOrEqualTo$age"/>
+            </div>
+            <div class="query-form-item fn-left fn-clear">
+                <label class="fn-left">年龄小于:</label>
+                <input class="easyui-textbox" type="text" name="lessThanOrEqualTo$age"/>
+            </div>
+            <div class="query-form-item fn-left fn-clear"  style="padding-left: 12px">
+                <a class="l-btn" id="user_query_button"><span class="l-btn-left"><span class="l-btn-text"style="width:40px">查询</span></span></a>
+            </div>
+        </form>
+    </div>
+    <div data-options="region:'center',border:false">
+        <table id="user-grid"></table>
+    </div>
+</div>
+<!-- 弹出框 -->
+<div id="user-window" style="width:600px;height:400px;">
+
+</div>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Basic Layout - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="${ROOT_PATH}/js/base.css">
+    <link rel="stylesheet" type="text/css" href="${ROOT_PATH}/js/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${ROOT_PATH}/js/themes/icon.css">
+    <script type="text/javascript" src="${ROOT_PATH}/js/jquery.min.js"></script>
+    <script type="text/javascript" src="${ROOT_PATH}/js/jquery.easyui.min.js"></script>
+</head>
+<body>
+<div>
+    <div id="loginDialog" title="系统登录" style="display: none; width: 320px; height: 180px; overflow: hidden;">
+        <div id="loginTabs" class="easyui-tabs" data-options="fit:true,border:false">
+            <div title="用户输入模式" style="overflow: hidden; padding: 10px;">
+                <form method="post" class="form">
+                    <table class="table" style="width: 100%; height: 100%;">
+                        <tr>
+                            <th width="50">登录名</th>
+                            <td><input name="data.loginname" class="easyui-validatebox" data-options="required:true" value="孙宇" style="width: 210px;" /></td>
+                        </tr>
+                        <tr>
+                            <th>密码</th>
+                            <td><input name="data.pwd" type="password" class="easyui-validatebox" data-options="required:true" value="123456" style="width: 210px;" /></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

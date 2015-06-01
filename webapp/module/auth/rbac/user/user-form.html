@@ -1,0 +1,81 @@
+<script>
+    $(function(){
+        var form = $("#user-form");
+        var userModel = Model.getModel('user');
+        var api= userModel.api();
+        var op = $.data(document.getElementById('user-module'),'op');
+        if(op=='update'){
+            var data = $('#user-grid').datagrid('getSelected');
+            form.form('load',data);
+        }
+        $("#user_from_submit").click(function(e){
+            e.preventDefault();
+            var validate = $("#user-form").form('validate');
+            if(validate){
+                var data = $.utils.serializeFrom($("#user-form"));
+                //执行更新操作
+                if(op=='add'){
+                    api.add(data,{model:'user'});
+                }else if(op=='update'){
+                    api.update(data,{model:'user'});
+                }
+            }
+        })
+        $("#user-name-cancel").click(function(e){
+            e.preventDefault();
+            userModel.window().window('close');
+        })
+    })
+</script>
+<div id="user_from_panel" class="easyui-panel" data-options="fit:true,footer:'#user_form_footer'" style="padding: 10px">
+    <!-- 定义form表单 -->
+    <form id="user-form">
+        <!-- 隐藏属性列表 -->
+        <div style="display: none">
+            <input type="hidden" name="uuid"/>
+        </div>
+        <table class="form-table">
+            <tbody>
+            <tr>
+                <th>登录名称</th>
+                <td><input class="easyui-textbox" name="name" data-options="prompt:'请填写用户名称'"
+                        style="width: 100%;height: 28px;">
+                </td>
+                <th>登录名称</th>
+                <td><input class="easyui-textbox" name="age" data-options="prompt:'请填写用户年龄'"
+                           style="width: 100%;height: 28px;">
+                </td>
+            </tr>
+            <tr>
+                <th>登录名称</th>
+                <td>
+                    <input class="easyui-textbox" name="" data-options="prompt:'请填写用户名称'"
+                           style="width: 100%;height: 28px;">
+                </td>
+                <th>登录名称</th>
+                <td>
+                    <input class="easyui-textbox" name="address" data-options="prompt:'请填写地址',required:true"
+                   style="width: 100%;height: 28px;">
+                </td>
+            </tr>
+            <tr>
+                <th>登录名称</th>
+                <td>
+                    <select id="cc" class="easyui-combobox" data-options="prompt:'请选择性别',required:true" name="sex"
+                        style="width: 100%;height: 28px;">
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </td>
+                <td colspan="2"></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<!-- 定义表单按钮组件 -->
+<div id="user_form_footer">
+    <a id="user_from_submit" style="float: left;width: 50px"; id="btn" href="#"  class="easyui-linkbutton">提交</a>
+    <a id="user-name-cancel" style="float: right;width: 50px" id="btn" href="#" class="easyui-linkbutton">取消</a>
+</div>
